@@ -1,83 +1,58 @@
 #!/bin/bash
 
-# 定义仓库信息
-REPO_URL="https://github.com/termux-lab/Termux-PocketMine0.14.x-Auto-Installer"
-TARGET_DIR="$HOME/Termux-PocketMine0.14.x-Auto-Installer"
-TEMP_DIR=$(mktemp -d)
+# PocketMine 自动安装脚本
+# 作者：你的名字
+# 描述：自动下载并安装 PocketMine 服务器
 
-# 清理函数
-cleanup() {
-    echo "正在清理临时文件..."
-    rm -rf "$TEMP_DIR"
-}
-trap cleanup EXIT
+# 定义变量
+REPO_URL="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/archive/refs/heads/main.zip"
+TEMP_ZIP="pocketmine_temp.zip"
+TEMP_DIR="Termux-PocketMine0.14.x-Auto-Installer-main"
+TARGET_DIR="$HOME/PocketMine"
+START_SCRIPT="$TARGET_DIR/start.sh"
+PHP_BIN="$TARGET_DIR/bin/php"
 
-# 检查必要工具
-check_dependencies() {
-    if ! command -v git &> /dev/null; then
-        echo "错误：需要安装git，但未找到。"
-        echo "请使用以下命令安装："
-        echo "  Ubuntu/Debian: sudo apt install git"
-        echo "  CentOS/RHEL: sudo yum install git"
-        exit 1
-    fi
-}
+# 1. 清理旧文件（如果存在）
+echo "正在清理旧文件..."
+rm -f "$TEMP_ZIP"
+rm -rf "$TARGET_DIR"
 
-# 用户确认函数
-confirm_download() {
-    while true; do
-        read -p "是否要下载并安装 Termux PocketMine0.14.x? [y/n]: " choice
-        case "$choice" in
-            [Yy]* ) 
-                echo "开始下载..."
-                return 0
-                ;;
-            [Nn]* )
-                echo "安装已取消"
-                exit 0
-                ;;
-            * ) 
-                echo "请输入 y 或 n"
-                ;;
-        esac
-    done
-}
+# 2. 下载仓库压缩包
+echo "正在下载 PocketMine 安装包..."
+curl -L -o "$TEMP_ZIP" "$REPO_URL"
 
-# 主函数
-main() {
-    check_dependencies
-    confirm_download
+# 检查下载是否成功
+if [ ! -f "$TEMP_ZIP" ]; then
+    echo "错误：下载失败！请检查网络连接。"
+    exit 1
+fi
 
-    echo "正在克隆仓库..."
-    if git clone --depth 1 "$REPO_URL" "$TEMP_DIR"; then
-        echo "[*]仓库下载成功"
-    else
-        echo "[*]下载失败，请检查网络连接和仓库URL"
-        echo "[*]请尝试使用VPN后重新执行"
-        exit 1
-    fi
+# 3. 解压压缩包
+echo "正在解压文件..."
+unzip -q "$TEMP_ZIP" -d "$HOME"
 
-    # 移动文件到目标目录
-    echo "正在移动文件到目标目录: $TARGET_DIR"
-    rm -rf "$TARGET_DIR" 2>/dev/null
-    mv "$TEMP_DIR" "$TARGET_DIR"
+# 检查解压是否成功
+if [ ! -d "$HOME/$TEMP_DIR" ]; then
+    echo "错误：解压失败！"
+    exit 1
+fi
 
-    # 检查start.sh文件
-    START_FILE="$TARGET_DIR/start.sh"
-    if [[ -f "$START_FILE" ]]; then
-        echo "找到启动脚本，添加执行权限..."
-        chmod +x "$START_FILE"
-        
-        echo "正在执行启动脚本..."
-        cd "$TARGET_DIR" || exit
-        ./start.sh
-        exit 1
-    else
-        echo "❌ 错误：未找到 start.sh 文件"
-        echo "目录内容："
-        ls -l "$TARGET_DIR"
-        exit 1
-    fi
-}
+# 4. 重命名文件夹
+echo "正在设置 PocketMine 目录..."
+mv "$HOME/$TEMP_DIR" "$TARGET_DIR"
 
-main
+# 5. 添加执行权限
+echo "设置执行权限..."
+chmod +x "$START_SCRIPT"
+chmod +x "$PHP_BIN"
+
+# 6. 清理临时文件
+echo "清理临时文件..."
+rm -f "$TEMP_ZIP"
+
+# 7. 启动 PocketMine
+echo "启动 PocketMine 服务器..."
+cd "$TARGET_DIR"
+"$START_SCRIPT"
+
+echo "PocketMine 服务器已启动！"
