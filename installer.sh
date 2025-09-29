@@ -36,6 +36,7 @@ case $choice_upper in
         echo "即将开始安装程序..."
         sleep 1
         ;;
+esac
 # 1. 清理旧文件（如果存在）
 echo "[*]正在清理旧文件..."
 rm -f "$TEMP_ZIP"
