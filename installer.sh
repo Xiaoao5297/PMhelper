@@ -56,7 +56,7 @@ fi
 
 # 3. 解压压缩包
 echo "[*]正在解压文件..."
-unzip -q "$TEMP_ZIP" -d "$HOME"
+unzip -q -o "$TEMP_ZIP" -d "$HOME"
 
 # 检查解压是否成功
 if [ ! -d "$HOME/$TEMP_DIR" ]; then
