@@ -1,0 +1,8 @@
+name: QDPlugin
+version: 1.0.0
+api: 1.13.1
+main: QDPlugin\Main
+commands:
+  qd:
+    description: "签到命令"
+    usage: "/qd"

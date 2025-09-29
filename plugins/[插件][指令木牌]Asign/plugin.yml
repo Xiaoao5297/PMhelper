@@ -1,0 +1,7 @@
+name: Asign
+author: Kirt
+main: Asign\Asign
+version: 1.4
+api: [1.10.0]
+load: POSTWORLD
+description: "此生无悔入东方，来世愿生幻想乡。一乡一梦愁怨长，入坑生死两茫茫。"

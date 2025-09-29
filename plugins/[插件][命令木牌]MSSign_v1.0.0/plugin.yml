@@ -1,0 +1,17 @@
+name: MSSign
+main: McShare\MSMain
+version: 1.0.0
+api: 
+- 1.0.0
+- 2.0.0
+- 3.0.0
+author: FransicSteve
+commands:
+ mssign:
+  description: "命令木牌命令"
+  usage: "§9/mssign help 查看帮助"
+  permission: MSSign.command.mssign
+permissions:
+ MSSign.command.mssig:
+  description: "OP权限"
+  default: op

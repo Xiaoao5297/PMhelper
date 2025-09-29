@@ -1,0 +1,24 @@
+name: BottomInfo
+version: 1.0.0
+main: db\Main
+api: [1.13.1]
+author: YourName
+description: 显示玩家底部信息，包括坐标、物品、金币、地图、延迟、时间、QQ群和服务器名称。
+
+commands:
+  qqq:
+    description: 设置服务器QQ群。
+    usage: "/qqq set <QQ群号>"
+    permission: bottominfo.command.qqq
+  sn:
+    description: 设置服务器名称。
+    usage: "/sn set <服务器名称>"
+    permission: bottominfo.command.sn
+
+permissions:
+  bottominfo.command.qqq:
+    description: 允许使用 /qqq 命令。
+    default: op
+  bottominfo.command.sn:
+    description: 允许使用 /sn 命令。
+    default: op

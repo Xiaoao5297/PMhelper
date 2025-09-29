@@ -1,0 +1,22 @@
+name: TitlePlugin
+version: 1.1.0
+main: TitlePlugin\Main
+api: [1.13.1]
+author: zxcvbnmqa
+description: 称号插件
+commands:
+  prefix:
+    description: 设置你的聊天称号
+    usage: "/prefix <称号>"
+    permission: title.set
+  pfname:
+    description: 设置你的自定义名字
+    usage: "/pfname <新名字>"
+    permission: title.setname
+permissions:
+  title.set:
+    description: 允许玩家设置称号
+    default: true
+  title.setname:
+    description: 允许玩家设置自定义名字
+    default: true

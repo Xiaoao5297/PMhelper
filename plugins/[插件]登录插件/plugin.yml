@@ -1,0 +1,35 @@
+name: Protection
+version: "1.8.0"
+api: 
+- 1.9.0
+author: zzx
+description: 服务器登入插件
+main: Protection\Protection
+
+commands:
+ keys:
+  description: keys 开/关/生成
+  permission: Protection.command.op
+  usage: /keys (on/off/null)
+  explain: 启用key后玩家注册需要激活/keys生成激活码
+ unregister:
+  description: 玩家密码修改
+  usage: /unreturn [旧密码] [新密码]
+ sban:
+  description: 超级BAN
+  permission: Protection.command.op
+  usage: /sban (add/remove/list) [id]
+  explain: 本ban可以屏蔽玩家ID和IP无法换ID继续游戏
+permissions:
+  Protection:
+    default: false
+    description: "Allows access to all Protection features."
+    children:
+      Protection.*:
+        default: false
+        description: "Allows access to all Protection features."
+      Protection.command.op:
+        default: op
+        description: "Allows access to the Protection command."
+
+        

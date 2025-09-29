@@ -1,0 +1,116 @@
+<?php
+namespace TitlePlugin;
+
+use pocketmine\plugin\PluginBase;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+use pocketmine\Player;
+use pocketmine\utils\TextFormat;
+use pocketmine\utils\Config;
+use onebone\economyapi\EconomyAPI;
+
+class Main extends PluginBase implements Listener {
+
+    /** @var array 存储玩家称号 */
+    private $titles = array();
+    /** @var array 存储玩家自定义名字 */
+    private $customNames = array();
+    /** @var int 设置称号所需金额 */
+    const TITLE_COST = 1000;
+    /** @var int 设置自定义名字所需金额 */
+    const NAME_COST = 10000;
+
+    public function onEnable() {
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->saveResource("config.yml");
+        $config = (new Config($this->getDataFolder() . "config.yml", Config::YAML))->getAll();
+        $this->titles = isset($config["titles"]) ? $config["titles"] : array();
+        $this->customNames = isset($config["customNames"]) ? $config["customNames"] : array();
+        $this->getLogger()->info(TextFormat::GREEN . "称号插件已启用！");
+    }
+
+    public function onDisable() {
+        $config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
+        $config->set("titles", $this->titles);
+        $config->set("customNames", $this->customNames);
+        $config->save();
+    }
+
+    /**
+     * 修改聊天
+     */
+    public function onChat(PlayerChatEvent $event) {
+        $player = $event->getPlayer();
+        $name = $player->getName();
+        $title = isset($this->titles[$name]) ? $this->titles[$name] : "";
+        $customName = isset($this->customNames[$name]) ? $this->customNames[$name] : $name;
+        $WorldName = $player->getLevel()->getName();
+        $event->setFormat("➢" . TextFormat::RESET . $title . TextFormat::WHITE . "(" . $customName . ")" . TextFormat::GRAY . " > " . TextFormat::WHITE . $event->getMessage());
+    }
+
+    /**
+     * 处理 /prefix 和 /pfname 指令
+     */
+    public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) {
+        if ($cmd->getName() === "prefix") {
+            if (!$sender instanceof Player) {
+                $sender->sendMessage(TextFormat::RED . "只有玩家可以使用此指令！");
+                return true;
+            }
+
+            if (count($args) < 1) {
+                $sender->sendMessage(TextFormat::RED . "§e▎§f用法: /prefix <称号>");
+                return true;
+            }
+
+            $title = implode(" ", $args); // 支持带空格的称<
+            $playerName = $sender->getName();
+
+            // 检查
+            $economy = EconomyAPI::getInstance();
+            $money = $economy->myMoney($playerName);
+            if ($money < self::TITLE_COST) {
+                $sender->sendMessage(TextFormat::RED . "§e▎§f设置称号需要 " . self::TITLE_COST . " 游戏币，你的余额不足！");
+                return true;
+            }
+
+            // 扣费并set
+            $economy->reduceMoney($sender, self::TITLE_COST);
+            $this->titles[$playerName] = $title;
+            $sender->sendMessage(TextFormat::GREEN . "§2▎§f你的称号更改为: : " . $title . TextFormat::GOLD . " (-" . self::TITLE_COST . " 游戏币)");
+            return true;
+        }
+
+        if ($cmd->getName() === "pfname") {
+            if (!$sender instanceof Player) {
+                $sender->sendMessage(TextFormat::RED . "§e▎§f只有玩家可以使用此指令！");
+                return true;
+            }
+
+            if (count($args) < 1) {
+                $sender->sendMessage(TextFormat::RED . "§9▎§f用法: /pfname <新名字>\n该插件由zxcvbnmqa制作");
+                return true;
+            }
+
+            $newName = implode(" ", $args); // 支持带空格的名字
+            $playerName = $sender->getName();
+
+            // 检查
+            $economy = EconomyAPI::getInstance();
+            $money = $economy->myMoney($playerName);
+            if ($money < self::NAME_COST) {
+                $sender->sendMessage(TextFormat::RED . "§e▎§f设置自定义名字需要 " . self::NAME_COST . " 游戏币，你没有钱，你设置什么?");
+                return true;
+            }
+
+            // 扣费
+            $economy->reduceMoney($sender, self::NAME_COST);
+            $this->customNames[$playerName] = $newName;
+            $sender->sendMessage(TextFormat::GREEN . "§2▎§f成功设置自定义名字为: " . $newName . TextFormat::GOLD . " (-" . self::NAME_COST . " 游戏币)");
+            return true;
+        }
+        return false;
+    }
+}

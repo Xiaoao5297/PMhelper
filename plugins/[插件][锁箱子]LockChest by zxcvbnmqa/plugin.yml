@@ -1,0 +1,13 @@
+name: LockChest
+version: 1.0.0
+api: 1.13.1
+main: LockChest\Main
+commands:
+  锁:
+    description: 锁定你面前的箱子
+  开锁:
+    description: 解除箱子锁定
+permissions:
+  lockchest.autolock:
+    description: 自动锁定放置的箱子
+    default: op
