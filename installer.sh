@@ -21,6 +21,33 @@ PHP_VER="7.2.8"
 echo "[*]欢迎使用 PocketMine 自动安装程序"
 read -p "按回车键继续..."
 
+#检测是否有PocketMine
+if [ -d "$HOME/PocketMine" ]; then
+    echo "检测到你已经安装了PocketMine"
+    echo "是否重装或者卸载？"
+    echo "注意：重装会重置你的所有数据！"
+    read -p "(r-重装 N-退出 u-卸载: )" choice_PMMP
+    if [[ -z "$choice_PMMP" || "$choice_PMMP" =~ ^[Nn]$ ]] ; then
+        exit 1
+    elif [[ "$choice_PMMP" =~ ^[Rr]$ ]] ; then
+        read -p "真的要重装吗？重装将失去服务器所有数据！可输入Ctrl+C关闭程序"
+        echo "[*]清理旧文件..."
+        rm -f "$TEMP_ZIP"
+        rm -rf "$TARGET_DIR"
+    elif [[ "$choice_PMMP" =~ ^[Uu]$ ]] ; then
+        read -p "真的要卸载吗？重装将失去服务器所有数据！可输入Ctrl+C关闭程序"
+        read -p "如果要卸载，请输入\"PocketMine\"" PocketMine_read
+        if [ $PocketMine_read == "PocketMine" ] ; then
+            rm -rf "$TARGET_DIR"
+            echo "删除成功"
+            exit 1
+        else
+            exit 1
+        fi
+    else
+        exit 1
+    fi
+fi
 # 询问版本信息
 read -p "[*]需要了解 PocketMine 版本信息吗？(y/N) " choice
 case "$choice" in
@@ -36,9 +63,9 @@ case "$choice" in
 esac
 
 # 清理旧文件
-echo "[*]清理旧文件..."
-rm -f "$TEMP_ZIP"
-rm -rf "$TARGET_DIR"
+#echo "[*]清理旧文件..."
+#rm -f "$TEMP_ZIP"
+#rm -rf "$TARGET_DIR"
 
 # 下载并解压仓库
 echo "[*]下载安装包..."
@@ -67,7 +94,7 @@ sleep 0.2
 # 配置bash（带存在性检查）
 echo "正在配置Bash别名..."
 if ! grep -q 'alias mc=' "$HOME/.bashrc"; then
-    echo "alias mc='$PHP_BIN $START_SCRIPT'" >> "$HOME/.bashrc"
+    echo "alias mc='$START_SCRIPT'" >> "$HOME/.bashrc"
     echo "[*]Bash别名已添加"
 else
     echo "[*]Bash别名已存在，跳过添加"
@@ -77,7 +104,7 @@ fi
 echo "正在配置Fish别名..."
 if [ -d "$HOME/.config/fish" ] && [ -f "$HOME/.config/fish/config.fish" ]; then
     if ! grep -q 'alias mc=' "$HOME/.config/fish/config.fish"; then
-        echo "alias mc='$PHP_BIN $START_SCRIPT'" >> "$HOME/.config/fish/config.fish"
+        echo "alias mc='$START_SCRIPT'" >> "$HOME/.config/fish/config.fish"
         echo "[*]Fish别名已添加"
     else
         echo "[*]Fish别名已存在，跳过添加"
@@ -95,7 +122,7 @@ echo "[*]启动 PocketMine 服务器..."
 echo "[*]服务器已启动"
 "$START_SCRIPT"
 
-echo "[*]配置已生效，现在可以使用 'mc' 命令管理服务器"
+echo "[*]配置已生效，现在可以使用 'mc' 命令启动服务器"
 echo "感谢您的使用！"
 read -p "换行以进行重载..."
 
