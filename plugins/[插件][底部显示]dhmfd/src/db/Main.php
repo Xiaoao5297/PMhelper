@@ -86,7 +86,7 @@ class Main extends PluginBase implements Listener {
             $time = date("H:i:s");
 
             // 从 config.yml 中读取显示格式
-            $format = $this->config->get("format", "<§2草§6方块§f服务器>\n§2金币: §6{money}§f   §2坐标: §6{x} §6{y} §6{z}§f\n§2物品: §6{item}§f   §2地图: §6{map}§f\n§2时间: §6{time}  §2QQ群: §6{qqq}");
+            $format = $this->config->get("format", "<§f服务器>\n§2金币: §6{money}§f   §2坐标: §6{x} §6{y} §6{z}§f\n§2物品: §6{item}§f   §2地图: §6{map}§f\n§2时间: §6{time}  §2QQ群: §6{qqq}");
 
             // 替换变量
             $info = str_replace(
