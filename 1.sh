@@ -27,7 +27,7 @@ BACKTITLE="PocketMine 自动安装程序"
 #if
 
 # 初始化dialog
-BACKTITLE="PocketMine 自动安装程序"
+PHP='BACKTITLE="PocketMine 自动安装程序"
 
 # Dialog颜色定义
 TITLE_COLOR="\Z0\Zb" # 黑色粗体标题
@@ -192,3 +192,5 @@ if [ -f "$HOME/.config/fish/config.fish" ]; then
 fi
 
 exit 0
+'
+echo "暂时维护"
