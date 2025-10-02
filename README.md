@@ -7,7 +7,7 @@ bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMin
 
 图形化安装界面（注意：可能不稳定，如有bug请反馈）
 ```
-bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/refs/heads/main/1.sh)
+bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/refs/heads/main/1.sh)"
 ```
 
 
