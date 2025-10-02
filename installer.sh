@@ -6,7 +6,7 @@
 
 # 定义变量
 REPO_URL="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/archive/refs/heads/main.zip"
-TEMP_ZIP="pocketmine_temp.zip"
+#EMP_ZIP="pocketmine_temp.zip"
 TEMP_DIR="Termux-PocketMine0.14.x-Auto-Installer-main"
 TARGET_DIR="$HOME/PocketMine"
 START_SCRIPT="$TARGET_DIR/start.sh"
@@ -16,8 +16,7 @@ PMMP_VER="1.6dev"
 PMMP_API="2.1.0"
 PMMP_PHP="php7.0~7.3"
 PHP_VER="7.2.8"
-
-# 显示欢迎信息
+PHP='# 显示欢迎信息
 echo "[*]欢迎使用 PocketMine 自动安装程序"
 read -p "按回车键继续..."
 
@@ -139,4 +138,5 @@ if [ -f "$HOME/.config/fish/config.fish" ]; then
     echo "[*]重新加载Fish配置..."
     fish -c 'source ~/.config/fish/config.fish'
 fi
-
+'
+echo "暂时维护"
