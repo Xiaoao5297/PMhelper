@@ -1,0 +1,29 @@
+2025-10-03 [11:10:47] [Server thread/WARNING]: Timezone could not be automatically determined or was set to an invalid value. An incorrect timezone will result in incorrect timestamps on console logs. It has been set to "UTC" by default. You can change it on the php.ini file.
+2025-10-03 [11:11:16] [Server thread/WARNING]: Timezone could not be automatically determined or was set to an invalid value. An incorrect timezone will result in incorrect timestamps on console logs. It has been set to "UTC" by default. You can change it on the php.ini file.
+2025-10-03 [11:11:20] [Server thread/INFO]: Loading pocketmine.yml...
+2025-10-03 [11:11:20] [Server thread/WARNING]: Debugging assertions are enabled, this may impact on performance. To disable them, set `zend.assertions = -1` in php.ini.
+2025-10-03 [11:11:20] [Server thread/INFO]: Loading server properties...
+2025-10-03 [11:11:20] [Server thread/INFO]: Selected English (eng) as the base language
+2025-10-03 [11:11:20] [Server thread/INFO]: Starting Minecraft: PE server version v1.2.13
+2025-10-03 [11:11:20] [Server thread/NOTICE]: Online mode is enabled. The server will verify that players are authenticated to Xbox Live.
+2025-10-03 [11:11:20] [Server thread/NOTICE]: To disable authentication, set "xbox-auth" to "false" in server.properties.
+2025-10-03 [11:11:20] [Server thread/INFO]: Opening server on 0.0.0.0:19132
+2025-10-03 [11:11:20] [Server thread/INFO]: This server is running PocketMine-MP version 1.7dev-937
+2025-10-03 [11:11:20] [Server thread/INFO]: PocketMine-MP is distributed under the LGPL License
+2025-10-03 [11:11:21] [Server thread/INFO]: Loading resource packs...
+2025-10-03 [11:11:21] [Server thread/NOTICE]: Level "world" not found
+2025-10-03 [11:11:21] [RakLibServer thread/CRITICAL]: InvalidStateException: "Failed to bind to 0.0.0.0 19132: Address in use" (EXCEPTION) in "vendor/pocketmine/raklib/server/UDPServerSocket" at line 37
+2025-10-03 [11:11:21] [RakLibServer thread/DEBUG]: #0 vendor/pocketmine/raklib/server/RakLibServer(227): raklib\server\UDPServerSocket->__construct(raklib\utils\InternetAddress object)
+2025-10-03 [11:11:21] [RakLibServer thread/DEBUG]: #1 (): raklib\server\RakLibServer->run()
+2025-10-03 [11:11:21] [Server thread/EMERGENCY]: RakLib crashed!
+2025-10-03 [11:11:21] [Server thread/INFO]: Preparing level "world"
+2025-10-03 [11:11:21] [Server thread/NOTICE]: Spawn terrain for level "world" is being generated in the background
+2025-10-03 [11:11:21] [Server thread/INFO]: Starting GS4 status listener
+2025-10-03 [11:11:21] [Server thread/INFO]: Setting query port to 19132
+2025-10-03 [11:11:21] [Server thread/INFO]: Query running on 0.0.0.0:19132
+2025-10-03 [11:11:21] [Server thread/INFO]: Default game type: Survival Mode
+2025-10-03 [11:11:21] [Server thread/INFO]: Done (9.73s)! For help, type "help" or "?"
+2025-10-03 [11:11:21] [Server thread/CRITICAL]: [Network] Stopped interface pocketmine\network\mcpe\RakLibInterface due to RakLib Thread crashed
+2025-10-03 [11:11:28] [Server thread/INFO]: [CONSOLE: Stopping the server]
+2025-10-03 [11:11:29] [Server thread/INFO]: Unloading level "world"
+2025-10-03 [11:11:29] [Server thread/INFO]: Stopping other threads
