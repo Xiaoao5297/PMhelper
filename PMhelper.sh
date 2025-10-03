@@ -351,6 +351,7 @@ main_1() {
     #不管了，再写一个史山
     #php, php73, php562, php702, php704, php724
     if [ -f "$HOME/PocketMine/php" ]; then
+        mv "$HOME/PocketMine/php" "$HOME/PocketMine/bin/php"
         echo "无需重命名文件名"
     elif [ -f "$HOME/PocketMine/php73" ]; then
         mv "$HOME/PocketMine/php73" "$HOME/PocketMine/php"
