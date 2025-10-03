@@ -8,6 +8,7 @@
 # -eq yes
 
 #定义变量
+TITLE_COLOR="\Z0\Zb"
 pmmp_dir="$HOME/PocketMine/"
 PMMP_STARTSH="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/start.sh"
 PMMP_PHPINI="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/php.ini"
@@ -28,12 +29,18 @@ BACKTITLE="PocketMine - PMHelper v1.0"
 
 # 显示消息对话框函数
 show_msg() {
-    dialog --backtitle "$BACKTITLE" --title "$1" --msgbox "$2" 0 0
+    dialog --backtitle "$BACKTITLE"\
+           --colors \
+           --title "${TITLE_COLOR}$1\Zn" \
+           --msgbox "$2" 0 0
 }
 
 # 显示确认对话框函数
 show_yesno() {
-    dialog --backtitle "$BACKTITLE" --title "$1" --yesno "$2" 0 0
+    dialog --backtitle "$BACKTITLE"\
+           --colors \
+           --title "${TITLE_COLOR}$1\Zn" \
+           --yesno "$2" 0 0
     return $?
 }
 
@@ -63,10 +70,11 @@ show_menu() {
     
     # 使用 dialog 创建菜单
     choice=$(dialog --backtitle "$BACKTITLE" \
-                   --title "$title" \
-                   --menu "$prompt" 0 0 0 \
-                   "${menu_items[@]}" \
-                   3>&1 1>&2 2>&3)
+                    --colors \
+                    --title "\Z0\Zb$title\Zn" \
+                    --menu "$prompt" 0 0 0 \
+                    "${menu_items[@]}" \
+                    3>&1 1>&2 2>&3)
     
     echo "$choice"
 }
