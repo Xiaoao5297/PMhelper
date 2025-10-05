@@ -513,8 +513,8 @@ main_menu() {
                     show_msg "找不到 $HOME/PocketMine/ 目录，请检查。"
                 else
                     #pm文件夹存在
-                    if [ ! -f "$HOME/PocketMine/PocketMine-MP.phar" ] || [ ! -d "$HOME/PocketMine/src/" ]; then
-                        show_msg "找不到 PocketMine-MP.phar 或者 src/ 文件夹，请先重命名或者安装 PocketMine"
+                    if [ ! -f "$HOME/PocketMine/start.sh" ]; then
+                        show_msg "找不到 start.sh ，请先重命名或者安装 PocketMine"
                     else
                         #pm文件完整
                         "START_PMMP"
