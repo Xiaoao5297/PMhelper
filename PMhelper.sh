@@ -517,7 +517,9 @@ main_menu() {
                         show_msg "找不到 start.sh ，请先重命名或者安装 PocketMine"
                     else
                         #pm文件完整
-                        "START_PMMP"
+                        clear
+                        "$HOME/PocketMine/start.sh"
+                        exit 0
                     fi
                 fi
                 ;;
