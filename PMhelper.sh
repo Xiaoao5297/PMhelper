@@ -7,17 +7,18 @@
 # -ne no
 # -eq yes
 
-#定义变量
+# 定义变量
+# 有了常量代码缩小1/3👍👍👍👍👍👍👍
+GITHUB="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main"
+# PHP_URL"$GITHUB/bins"
 TITLE_COLOR="\Z0\Zb"
 pmmp_dir="$HOME/PocketMine/"
-PMMP_STARTSH="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/start.sh"
-PMMP_PHPINI="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/php.ini"
+PMMP_STARTSH="$GITHUB/start.sh"
+PMMP_PHPINI="$GITHUB/php.ini"
 PMMP_DIR="$HOME/PocketMine/"
 START_PMMP="$HOME/PocketMine/start.sh"
-#PHP_5=""
-#PHP_70=""
-#PHP_72=""
-#PHP_73=""
+START_PMH='bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/refs/heads/main/PMhelper.sh)"'
+
 # 初始化dialog
 BACKTITLE="PocketMine - PMHelper v1.0"
 
@@ -53,6 +54,30 @@ show_input() {
     result=$(cat /tmp/input.$$)
     rm -f /tmp/input.$$
     echo "$result"
+}
+#设置别名函数
+mc_start(){
+    echo "正在配置Bash别名..."
+    if ! grep -q 'alias mc=' "$HOME/.bashrc"; then
+        echo "alias mc='$START_PMMP'" >> "$HOME/.bashrc"
+        echo "[*]Bash别名已添加"
+    else
+        echo "[*]Bash别名已存在，跳过添加"
+    fi
+
+    # 配置fish（带存在性检查）
+    echo "正在配置Fish别名..."
+    if [ -d "$HOME/.config/fish" ] && [ -f "$HOME/.config/fish/config.fish" ]; then
+        if ! grep -q 'alias mc=' "$HOME/.config/fish/config.fish"; then
+            echo "alias mc='$START_PMMP'" >> "$HOME/.config/fish/config.fish"
+            echo "[*]Fish别名已添加"
+        else
+            echo "[*]Fish别名已存在，跳过添加"
+        fi
+    else
+        echo "[*]未找到Fish配置文件，跳过别名配置"
+    fi
+    
 }
 
 # 显示菜单函数
@@ -136,36 +161,36 @@ main_1() {
                     main_menu
                     ;;
                 01)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php" #php7.2
+                    php="$GITHUB/bins/php" #php7.2
                     #我也不知道为什么地址这么长...
                     ;;
                 02 | 03)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php704" #php7.0
+                    php="$GITHUB/bins/php704" #php7.0
                     ;;
                 04 | 05 | 06)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php562" #php5
+                    php="$GITHUB/bins/php562" #php5
                     ;;
             esac
             #0.14选择版本
             #不想写屎山代码啊啊啊啊
             case $choice_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.14/Genisys_GrassMC_v0.14.x.phar"
+                    php_src="$GITHUB/srcs/0.14/Genisys_GrassMC_v0.14.x.phar"
                     ;;
                 02)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.14/Genisys_v0.14.x.phar"
+                    php_src="$GITHUB/srcs/0.14/Genisys_v0.14.x.phar"
                     ;;
                 03)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.14/Genisys_1.1dev.phar"
+                    php_src="$GITHUB/srcs/0.14/Genisys_1.1dev.phar"
                     ;;
                 04)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.14/ClearSky_v0.14.x.phar"
+                    php_src="$GITHUB/srcs/0.14/ClearSky_v0.14.x.phar"
                     ;;
                 05)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.14/ITXPHP5.phar"
+                    php_src="$GITHUB/srcs/0.14/ITXPHP5.phar"
                     ;;
                 06)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.14/Genisys_php5.phar"
+                    php_src="$GITHUB/srcs/0.14/Genisys_php5.phar"
                     ;;
             esac
             ;;
@@ -182,12 +207,12 @@ main_1() {
                     main_menu
                     ;;
                 01)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php704"
+                    php="$GITHUB/bins/php704"
                     ;;
             esac
             case $choice_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.15/Genisys_v0.15.x.phar"
+                    php_src="$GITHUB/srcs/0.15/Genisys_v0.15.x.phar"
                     ;;
             esac
             ;;
@@ -203,12 +228,12 @@ main_1() {
                     main_menu
                     ;;
                 01)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php"
+                    php="$GITHUB/bins/php"
                     ;;
             esac
             case $choice_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/1.1/GenisysPro_v1.1.x.phar"
+                    php_src="$GITHUB/srcs/1.1/GenisysPro_v1.1.x.phar"
                     ;;
             esac
             ;;
@@ -224,15 +249,15 @@ main_1() {
                     main_menu
                     ;;
                 01 | 02)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php562"
+                    php="$GITHUB/bins/php562"
                     ;;
             esac
             case $choice_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.11/乌兰托娅万岁改造和谐核心_更新.phar"
+                    php_src="$GITHUB/srcs/0.11/乌兰托娅万岁改造和谐核心_更新.phar"
                     ;;
                 02)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.11/乌兰托娅万岁改造流星核心.phar"
+                    php_src="$GITHUB/srcs/0.11/乌兰托娅万岁改造流星核心.phar"
                     ;;
             esac
             ;;
@@ -248,21 +273,21 @@ main_1() {
                     main_menu
                     ;;
                 01 | 02)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php562"
+                    php="$GITHUB/bins/php562"
                     ;;
                 03)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php704"
+                    php="$GITHUB/bins/php704"
                     ;;
             esac
             case $choise_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.13/PocketMine-MP_1.7WTB.phar"
+                    php_src="$GITHUB/srcs/0.13/PocketMine-MP_1.7WTB.phar"
                     ;;
                 02)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.13/乌兰托娅0.13.phar"
+                    php_src="$GITHUB/srcs/0.13/乌兰托娅0.13.phar"
                     ;;
                 03)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.13/Genisys.phar"
+                    php_src="$GITHUB/srcs/0.13/Genisys.phar"
                     ;;
             esac
             ;;
@@ -276,12 +301,12 @@ main_1() {
                     main_menu
                     ;;
                 01)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php704"
+                    php="$GITHUB/bins/php704"
                     ;;
             esac
             case $choice_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/0.16/Genisys_v0.16.x.phar"
+                    php_src="$GITHUB/srcs/0.16/Genisys_v0.16.x.phar"
                     ;;
             esac
             ;;
@@ -295,12 +320,12 @@ main_1() {
                     main_menu
                     ;;
                 01)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php704"
+                    php="$GITHUB/bins/php704"
                     ;;
             esac
             case $choice_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/1.0/PocketMine-MP1.0.phar"
+                    php_src="$GITHUB/srcs/1.0/PocketMine-MP1.0.phar"
                     ;;
             esac
             ;;
@@ -314,12 +339,12 @@ main_1() {
                 main_menu
                 ;;
                 01)
-                    php="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/bins/php"
+                    php="$GITHUB/bins/php"
                     ;;
             esac
             case $choice_PMMP_src in
                 01)
-                    php_src="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/refs/heads/main/srcs/1.2.12/PocketMine-MP1.2.12.phar"
+                    php_src="$GITHUB/srcs/1.2.12/PocketMine-MP1.2.12.phar"
                     ;;
             esac
             ;;
@@ -378,28 +403,8 @@ main_1() {
         read -p "提示：以后你可以输入mc启动服务器，输入stop停止服务器。如果没问题，就敲下 回车 ，尽情享用吧~"
         "$START_PMMP"
     fi
-    
-    #read -p "提示：以后你可以输入mc启动服务器，输入stop停止服务器。如果没问题，就敲下 回车 "
-    echo "正在配置Bash别名..."
-    if ! grep -q 'alias mc=' "$HOME/.bashrc"; then
-        echo "alias mc='$START_SCRIPT'" >> "$HOME/.bashrc"
-        echo "[*]Bash别名已添加"
-    else
-        echo "[*]Bash别名已存在，跳过添加"
-    fi
 
-    # 配置fish（带存在性检查）
-    echo "正在配置Fish别名..."
-    if [ -d "$HOME/.config/fish" ] && [ -f "$HOME/.config/fish/config.fish" ]; then
-        if ! grep -q 'alias mc=' "$HOME/.config/fish/config.fish"; then
-            echo "alias mc='$START_SCRIPT'" >> "$HOME/.config/fish/config.fish"
-            echo "[*]Fish别名已添加"
-        else
-            echo "[*]Fish别名已存在，跳过添加"
-        fi
-    else
-        echo "[*]未找到Fish配置文件，跳过别名配置"
-    fi
+    mc_start
     
     if [ -f "$HOME/.bashrc" ]; then
         echo "[*]重新加载Bash配置..."
@@ -424,9 +429,70 @@ main_2() {
     show_msg "提示" "暂未开发..."
 }
 
-# 选项三函数
+# 选项三函数：其他选项
 main_3() {
-    show_msg "提示" "暂未开发..."
+    choice_main3_menu=$(show_menu "其他选项" "用↑↓键选择，回车键确定"\
+    "1" "设置服务器快捷启动"\
+    "2" "设置PMhelper快捷启动"
+    )
+    
+    case $choice_main3_menu in
+        1)
+            #自定义快捷启动项
+            mc_start
+            
+            show_yesno "提示" "设置成功！重启终端后生效，是否立即重启终端？"
+            if [ $? -eq 0 ];then
+                if [ -f "$HOME/.bashrc" ]; then
+                    echo "[*]重新加载Bash配置..."
+                    source "$HOME/.bashrc"
+                fi
+
+                # 检测并重新加载Fish配置
+                if [ -f "$HOME/.config/fish/config.fish" ]; then
+                    echo "[*]重新加载Fish配置..."
+                    fish -c 'source ~/.config/fish/config.fish'
+                fi
+            fi
+            ;;
+        2)
+            # PMhelper快捷启动
+            echo "正在配置Bash别名..."
+            if ! grep -q 'alias pmh=' "$HOME/.bashrc"; then
+                echo "alias pmh='$START_PMH'" >> "$HOME/.bashrc"
+                echo "[*]Bash别名已添加"
+            else
+                echo "[*]Bash别名已存在，跳过添加"
+            fi
+
+            # 配置fish（带存在性检查）
+            echo "正在配置Fish别名..."
+            if [ -d "$HOME/.config/fish" ] && [ -f "$HOME/.config/fish/config.fish" ]; then
+                if ! grep -q 'alias pmh=' "$HOME/.config/fish/config.fish"; then
+                    echo "alias pmh='$START_PMH'" >> "$HOME/.config/fish/config.fish"
+                    echo "[*]Fish别名已添加"
+                else
+                    echo "[*]Fish别名已存在，跳过添加"
+                fi
+            else
+                echo "[*]未找到Fish配置文件，跳过别名配置"
+            fi
+        
+            show_yesno "提示" "设置成功！重启终端后生效，是否立即重启终端？"
+            if [ $? -eq 0 ];then
+                if [ -f "$HOME/.bashrc" ]; then
+                    echo "[*]重新加载Bash配置..."
+                    source "$HOME/.bashrc"
+                fi
+
+                # 检测并重新加载Fish配置
+                if [ -f "$HOME/.config/fish/config.fish" ]; then
+                    echo "[*]重新加载Fish配置..."
+                    fish -c 'source ~/.config/fish/config.fish'
+                fi
+            fi
+            ;;
+    esac
 }
 
 # 主菜单函数
@@ -434,18 +500,29 @@ main_menu() {
     while true; do
         # 显示菜单并获取用户选择
         choice=$(show_menu "主菜单" "用↑↓键选择，回车键确定" \
-            "1" "安装PocketMine" \
-            "2" "施工中...🚧" \
-            "3" "施工中...🚧" \
+            "1" "启动PocketMine" \
+            "2" "安装PocketMine" \
+            "3" "其他选项" \
             "0" "退出")
         
         # 处理用户选择
         case "$choice" in
             1)
-                main_1
+                if [ ! -d "$HOME/PocketMine/" ]; then
+                    #pm文件夹不存在
+                    show_msg "找不到 $HOME/PocketMine/ 目录，请检查。"
+                else
+                    #pm文件夹存在
+                    if [ ! -f "$HOME/PocketMine/PocketMine-MP.phar" ] || [ ! -d "$HOME/PocketMine/src/" ]; then
+                        show_msg "找不到 PocketMine-MP.phar 或者 src/ 文件夹，请先重命名或者安装 PocketMine"
+                    else
+                        #pm文件完整
+                        "START_PMMP"
+                    fi
+                fi
                 ;;
             2)
-                main_2
+                main_1
                 ;;
             3)
                 main_3
