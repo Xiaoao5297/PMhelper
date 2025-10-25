@@ -2,7 +2,7 @@
 
 # PMHelper - 可扩展版本
 # v2.1
-# 作者：Xiaoao
+# 作者:Xiaoao
 
 # 定义常量
 GITHUB="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/main"
@@ -10,6 +10,7 @@ PMMP_DIR="$HOME/PocketMine/"
 START_PMMP="$PMMP_DIR/start.sh"
 BACKTITLE="PocketMine - PMHelper v2.1"
 PMMP_GITHUB="https://github.com/pmmp/PocketMine-MP/releases/download"
+
 # 颜色定义
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -18,55 +19,42 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 TITLE_COLOR="\Z0\Zb"
 
-# ================================
 # 基础函数定义
-# ================================
-
 # 日志函数
-log() {
-    echo -e "${GREEN}[INFO]${NC} $(date '+%Y-%m-%d %H:%M:%S') - $1"
-}
-
-warn() {
-    echo -e "${YELLOW}[WARN]${NC} $(date '+%Y-%m-%d %H:%M:%S') - $1"
-}
-
-error() {
-    echo -e "${RED}[ERROR]${NC} $(date '+%Y-%m-%d %H:%M:%S') - $1"
-}
+log() { echo -e "${GREEN}[INFO]${NC} $(date '+%Y-%m-%d %H:%M:%S') - $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC} $(date '+%Y-%m-%d %H:%M:%S') - $1"; }
+error() { echo -e "${RED}[ERROR]${NC} $(date '+%Y-%m-%d %H:%M:%S') - $1"; }
 
 # 对话框函数
 show_msg() {
     dialog --backtitle "$BACKTITLE" \
-           --colors \
-           --title "${TITLE_COLOR}$1\Zn" \
-           --msgbox "$2" 0 0
+        --colors \
+        --title "${TITLE_COLOR}$1\Zn" \
+        --msgbox "$2" 0 0
 }
 
 show_yesno() {
     dialog --backtitle "$BACKTITLE" \
-           --colors \
-           --title "${TITLE_COLOR}$1\Zn" \
-           --yesno "$2" 0 0
+        --colors \
+        --title "${TITLE_COLOR}$1\Zn" \
+        --yesno "$2" 0 0
     return $?
 }
 
 show_menu() {
     local title="$1" prompt="$2"
     shift 2
-    
     local menu_items=()
     while [ $# -gt 0 ]; do
         menu_items+=("$1" "$2")
         shift 2
     done
-    
     dialog --backtitle "$BACKTITLE" \
-           --colors \
-           --title "${TITLE_COLOR}$title\Zn" \
-           --menu "$prompt" 0 0 0 \
-           "${menu_items[@]}" \
-           3>&1 1>&2 2>&3
+        --colors \
+        --title "${TITLE_COLOR}$title\Zn" \
+        --menu "$prompt" 0 0 0 \
+        "${menu_items[@]}" \
+        3>&1 1>&2 2>&3
 }
 
 # 下载函数
@@ -99,13 +87,10 @@ check_dependencies() {
     fi
 }
 
-# ================================
-# 版本配置数据库 - 在这里添加新版本！
-# ================================
-
+# 版本配置数据库 - 在这里添加新版本!
 declare -A VERSION_DATABASE=(
     # 格式: [版本代码]="显示名称|PHP二进制URL|核心文件URL|PHP版本|分类|推荐级别"
-    # 0.11.x 系列  
+    # 0.11.x 系列
     ["01101"]="和谐核心 更新版|${GITHUB}/bins/php562|${GITHUB}/srcs/0.11/乌兰托娅万岁改造和谐核心_更新.phar|5.6|0.11.x"
     ["01102"]="流星核心|${GITHUB}/bins/php562|${GITHUB}/srcs/0.11/乌兰托娅万岁改造流星核心.phar|5.6|0.11.x"
     
@@ -122,10 +107,9 @@ declare -A VERSION_DATABASE=(
     
     # 0.15.x 系列
     ["01501"]="Genisys v0.15.x|${GITHUB}/bins/php704|${GITHUB}/srcs/0.15/Genisys_v0.15.x.phar|7.0|0.15.x"
-        
+    
     # 1.2.x 系列 - 新增示例
     ["12001"]="PocketMine-MP 1.2.12|${GITHUB}/bins/php|${GITHUB}/srcs/1.2.12/PocketMine-MP1.2.12.phar|7.2|1.2.x"
-    
     ["12101"]="PocketMine-MP|${GITHUB}/bins/php8/php82|${PMMP_GITHUB}/5.36.0/PocketMine-MP.phar|8.2|1.21.111"
 )
 
@@ -133,7 +117,7 @@ declare -A VERSION_DATABASE=(
 declare -A VERSION_CATEGORIES=(
     ["011"]="0.11.x"
     ["013"]="0.13.x"
-    ["014"]="0.14.x" 
+    ["014"]="0.14.x"
     ["015"]="0.15.x"
     ["016"]="0.16.x"
     ["102"]="1.2.x"
@@ -141,28 +125,21 @@ declare -A VERSION_CATEGORIES=(
     ["121"]="1.21.x"
 )
 
-# ================================
 # 核心功能函数
-# ================================
-
 # 获取分类菜单
 show_category_menu() {
     local menu_items=("00" "返回主菜单")
-    
     # 按分类代码排序
     for category_code in $(echo "${!VERSION_CATEGORIES[@]}" | tr ' ' '\n' | sort); do
         menu_items+=("$category_code" "${VERSION_CATEGORIES[$category_code]}")
     done
-    
     show_menu "选择版本分类" "请选择要安装的版本分类" "${menu_items[@]}"
 }
 
 # 显示版本选择菜单
-# 显示版本选择菜单
 show_version_menu() {
     local category="$1"
     local category_name="${VERSION_CATEGORIES[$category]}"
-    
     local menu_items=("00" "返回上一步")
     
     # 获取该分类下的所有版本
@@ -172,12 +149,11 @@ show_version_menu() {
             local info="${VERSION_DATABASE[$version_code]}"
             local name=$(echo "$info" | cut -d'|' -f1)
             local php_ver=$(echo "$info" | cut -d'|' -f4)
-            
             menu_items+=("$version_code" "$name (PHP$php_ver)")
         fi
     done
     
-    # 如果没有找到版本，显示提示
+    # 如果没有找到版本,显示提示
     if [ ${#menu_items[@]} -eq 2 ]; then
         show_msg "提示" "分类 $category_name 下没有找到可用的版本"
         return
@@ -190,7 +166,6 @@ show_version_menu() {
 get_version_info() {
     local version_code="$1"
     local info="${VERSION_DATABASE[$version_code]}"
-    
     if [[ -n "$info" ]]; then
         echo "$info"
     else
@@ -201,7 +176,6 @@ get_version_info() {
 # 安装选定的版本
 install_selected_version() {
     local version_code="$1"
-    
     local info=$(get_version_info "$version_code")
     if [[ $? -ne 0 ]]; then
         error "无效的版本代码: $version_code"
@@ -213,24 +187,22 @@ install_selected_version() {
     local core_url=$(echo "$info" | cut -d'|' -f3)
     local php_ver=$(echo "$info" | cut -d'|' -f4)
     local category=$(echo "$info" | cut -d'|' -f5)
-    #local recommend=$(echo "$info" | cut -d'|' -f6)
     
     log "开始安装: $name"
     log "版本: $category | PHP: $php_ver"
     
     # 检查现有安装
     if [[ -d "$PMMP_DIR" ]]; then
-        show_yesno "警告" "检测到已存在的PocketMine安装。继续安装将删除所有数据！如果没有重要文件可以放心下一步"
+        show_yesno "警告" "检测到已存在的PocketMine安装。继续安装将删除所有数据!如果没有重要文件可以放心下一步"
         [[ $? -ne 0 ]] && return 1
         rm -rf "$PMMP_DIR"
     fi
+    
     mkdir -p "$PMMP_DIR"
-    # 创建目录
     mkdir -p "$PMMP_DIR/bin"
     
     # 下载文件
     log "下载必要文件..."
-    
     if ! download_file "$php_url" "$PMMP_DIR/bin/php"; then
         error "PHP二进制下载失败"
         return 1
@@ -247,30 +219,30 @@ install_selected_version() {
     fi
     
     if ! download_file "$GITHUB/php.ini" "$PMMP_DIR/php.ini"; then
-        warn "php.ini下载失败，将使用默认配置"
+        warn "php.ini下载失败,将使用默认配置"
     fi
     
     # 设置权限
     chmod -R +x "$PMMP_DIR"
     chmod +x "$PMMP_DIR/bin/php" "$START_PMMP"
     
-    log "安装完成！"
+    log "安装完成!"
     return 0
 }
 
 # 启动服务器
 start_server() {
     if [[ ! -d "$PMMP_DIR" ]]; then
-        show_msg "错误" "PocketMine目录不存在，请先安装"
+        show_msg "错误" "PocketMine目录不存在,请先安装"
         return 1
     fi
-
+    
     if [[ ! -f "$START_PMMP" ]]; then
         show_msg "错误" "启动脚本不存在"
         return 1
     fi
-
-    show_yesno "确认" "是否启动PocketMine服务器？"
+    
+    show_yesno "确认" "是否启动PocketMine服务器?"
     [[ $? -eq 0 ]] && {
         clear
         log "启动服务器..."
@@ -281,7 +253,6 @@ start_server() {
 # 别名管理
 manage_alias() {
     local alias_name="$1" alias_command="$2" shell_type="$3"
-    
     case "$shell_type" in
         "bash")
             local bashrc="$HOME/.bashrc"
@@ -308,12 +279,11 @@ manage_alias() {
 
 setup_aliases() {
     log "设置命令别名..."
-    
     # 设置服务器启动别名
     manage_alias "mc" "bash $START_PMMP" "bash"
     
     # 设置PMHelper启动别名
-    local pmh_command='bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/main/PMhelper.sh)"'
+    local pmh_command='bash -c "$(curl -fsSL https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/main/PMhelper.sh)"'
     manage_alias "pmh" "$pmh_command" "bash"
     
     # Fish配置
@@ -322,13 +292,10 @@ setup_aliases() {
         manage_alias "pmh" "$pmh_command" "fish"
     fi
     
-    show_msg "成功" "别名设置完成！\n\n使用说明：\n- 输入 'mc' 启动服务器\n- 输入 'pmh' 启动PMHelper\n\n重启终端后生效"
+    show_msg "成功" "别名设置完成!\n\n使用说明:\n- 输入 'mc' 启动服务器\n- 输入 'pmh' 启动PMHelper\n\n重启终端后生效"
 }
 
-# ================================
 # 安装流程主函数
-# ================================
-
 install_pocketmine() {
     while true; do
         # 选择分类
@@ -345,16 +312,13 @@ install_pocketmine() {
         if install_selected_version "$version_code"; then
             return 0
         else
-            show_yesno "错误" "安装失败，是否重新选择版本？"
+            show_yesno "错误" "安装失败,是否重新选择版本?"
             [[ $? -ne 0 ]] && return 1
         fi
     done
 }
 
-# ================================
 # 设置菜单
-# ================================
-
 settings_menu() {
     local choice=$(show_menu "设置" "请选择设置选项" \
         "1" "设置服务器快捷启动 (mc)" \
@@ -368,8 +332,8 @@ settings_menu() {
             [[ -d "$HOME/.config/fish" ]] && manage_alias "mc" "bash $START_PMMP" "fish"
             show_msg "成功" "服务器启动别名 'mc' 已设置"
             ;;
-        "2") 
-            local pmh_command='bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/main/PMhelper.sh)"'
+        "2")
+            local pmh_command='bash -c "$(curl -fsSL https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/main/PMhelper.sh)"'
             manage_alias "pmh" "$pmh_command" "bash"
             [[ -d "$HOME/.config/fish" ]] && manage_alias "pmh" "$pmh_command" "fish"
             show_msg "成功" "PMHelper别名 'pmh' 已设置"
@@ -377,36 +341,31 @@ settings_menu() {
         "3")
             setup_aliases
             ;;
-        "0") return ;;
+        "0")
+            return
+            ;;
     esac
 }
 
-# ================================
 # 版本管理功能
-# ================================
-
 # 显示版本数据库
 list_version_database() {
     clear
     echo "当前版本数据库:"
-    echo "========================"
-    
+    echo
     for category_code in $(echo "${!VERSION_CATEGORIES[@]}" | tr ' ' '\n' | sort); do
         echo "分类: ${VERSION_CATEGORIES[$category_code]}"
-        echo "------------------------"
-        
+        echo
         for version_code in $(echo "${!VERSION_DATABASE[@]}" | tr ' ' '\n' | sort); do
             if [[ "$version_code" == "$category_code"* ]]; then
                 local info="${VERSION_DATABASE[$version_code]}"
                 local name=$(echo "$info" | cut -d'|' -f1)
                 local php_ver=$(echo "$info" | cut -d'|' -f4)
-                local recommend=$(echo "$info" | cut -d'|' -f6)
-                echo "  $version_code: $name (PHP$php_ver) - $recommend"
+                echo "  $version_code: $name (PHP$php_ver)"
             fi
         done
         echo
     done
-    
     read -p "按回车键继续..."
 }
 
@@ -414,21 +373,18 @@ list_version_database() {
 add_new_version() {
     clear
     echo "添加新版本到数据库:"
-    echo "========================"
-    
-    read -p "版本代码 (6位数字，如01401): " code
+    echo
+    read -p "版本代码 (6位数字,如01401): " code
     read -p "显示名称: " name
     read -p "PHP二进制URL: " php_url
     read -p "核心文件URL: " core_url
     read -p "PHP版本: " php_ver
-    read -p "分类代码 (3位，如014): " category
-    read -p "推荐级别: " recommend
-    
+    read -p "分类代码 (3位,如014): " category
     echo
     echo "请将以下行添加到 VERSION_DATABASE 数组中:"
-    echo "[\"$code\"]=\"$name|$php_url|$core_url|$php_ver|$category|$recommend\""
+    echo "[\"$code\"]=\"$name|$php_url|$core_url|$php_ver|$category\""
     echo
-    echo "如果分类不存在，请同时添加到 VERSION_CATEGORIES:"
+    echo "如果分类不存在,请同时添加到 VERSION_CATEGORIES:"
     read -p "分类显示名称: " category_name
     echo "[\"$category\"]=\"$category_name\""
     echo
@@ -443,20 +399,19 @@ developer_menu() {
         "0" "返回")
     
     case "$choice" in
-        "1") 
+        "1")
             list_version_database
             ;;
-        "2") 
+        "2")
             add_new_version
             ;;
-        "0") return ;;
+        "0")
+            return
+            ;;
     esac
 }
 
-# ================================
 # 主菜单
-# ================================
-
 main_menu() {
     while true; do
         local choice=$(show_menu "PMHelper v2.1" "PocketMine服务器管理工具" \
@@ -468,61 +423,49 @@ main_menu() {
             "0" "退出")
         
         case "$choice" in
-            "1") 
+            "1")
                 if install_pocketmine; then
-                    show_yesno "安装完成" "是否现在启动服务器？" && start_server
-                    show_yesno "别名设置" "是否设置命令别名？" && setup_aliases
+                    show_yesno "安装完成" "是否现在启动服务器?" && start_server
+                    show_yesno "别名设置" "是否设置命令别名?" && setup_aliases
                 fi
                 ;;
-            "2") 
+            "2")
                 start_server
                 ;;
-            "3") 
+            "3")
                 settings_menu
                 ;;
-            "4") 
+            "4")
                 list_version_database
                 ;;
-            "9") 
+            "9")
                 developer_menu
                 ;;
-            "0") 
-                show_yesno "确认" "确定要退出吗？" 
+            "0")
+                show_yesno "确认" "确定要退出吗?"
                 [[ $? -eq 0 ]] && clear && break
                 ;;
         esac
     done
 }
 
-# ================================
 # 初始化
-# ================================
-
 init() {
     clear
     log "PMHelper v2.1 启动"
     check_dependencies
-    
-    # 创建必要目录
-    # mkdir -p "$HOME/PocketMine"
-    
-    # 清理临时文件
-    #[[ -d "/tmp/PMHelper" ]] && rm -rf "/tmp/PMHelper"
 }
 
-# ================================
 # 主程序
-# ================================
-
 main() {
     init
     trap 'clear; exit 0' INT TERM
     main_menu
 }
 
-# 启动脚本
-# 修改后的启动逻辑
+# 修复启动逻辑 - 确保脚本能直接运行
+# 检测脚本是否被直接执行（而不是被source）
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    # 如果是直接执行，运行主程序
     main "$@"
 fi
-#main
