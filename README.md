@@ -9,10 +9,10 @@
 - 确保您的设备是aarch64地CPU架构，否则请使用自己的php二进制文件
 - 在[Termux](https://github.com/termux/termux-app)软件里运行以下命令
 ```bash
-bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/refs/heads/main/PMHelper.sh)"
+bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/PMhelper/refs/heads/main/PMhelper.sh)"
 ```
 - 随后弹出一个dialog窗口，使用上下方向键可以选择，输入回车键以选择。
-- 安装完成后，PocketMine地安装位置一般在`/data/data/com.termux/files/home/PocketMine`文件夹下
+- 安装完成后，PocketMine地安装位置一般在`/data/data/com.termux/files/home/PocketMine/`或`$HOME/PocketMine/`文件夹下
 - 您可以在此文件夹的`bin/`文件夹里使用您自己的php二进制包
 
 ### English
@@ -26,10 +26,10 @@ bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMin
 - Ensure your device uses an aarch64 CPU architecture. If not, please use your own PHP binary.
 - Run the following command in the [Termux] (https://github.com/termux/termux-app) application:
 ```bash
-bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/refs/heads/main/PMHelper.sh)"
+bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/PMhelper/refs/heads/main/PMhelper.sh)"
 ```
 - A dialog window will appear. Use the Up/Down arrow keys to navigate and press Enter to confirm your selection.
 - After installation, PocketMine will typically be installed in the following directory: 
-`/data/data/com.termux/files/home/PocketMine`.
+`/data/data/com.termux/files/home/PocketMine` or `$HOME/PocketMine/`.
 - You can use your own PHP binary in the 
 `bin/` folder within this directory.
