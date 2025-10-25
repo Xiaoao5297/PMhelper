@@ -521,6 +521,7 @@ main() {
 }
 
 # 启动脚本
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+# 修改后的启动逻辑
+if [[ -n "${BASH_SOURCE}" && "${BASH_SOURCE[0]}" == "${0}" ]]; then
     main "$@"
 fi
