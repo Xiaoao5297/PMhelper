@@ -3,7 +3,7 @@
 # PMHelper - 可扩展版本
 # v2.1
 # 作者:Xiaoao
-
+set -e
 # 定义常量
 GITHUB="https://github.com/Xiaoao5297/Termux-PocketMine0.14.x-Auto-Installer/raw/main"
 PMMP_DIR="$HOME/PocketMine/"
@@ -463,4 +463,13 @@ main() {
     main_menu
 }
 
-main "$@"
+# 确保脚本能正确执行
+if [[ -n "$BASH_SOURCE" ]]; then
+    # 如果是通过 curl | bash 或 bash -c 方式执行
+    if [[ "$0" == *bash* ]] || [[ "$0" == *curl* ]] || [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+        main "$@"
+    fi
+else
+    # 其他情况也执行
+    main "$@"
+fi
