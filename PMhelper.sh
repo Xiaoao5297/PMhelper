@@ -515,14 +515,14 @@ init() {
 # ================================
 
 main() {
-    #init
-    #trap 'clear; exit 0' INT TERM
+    init
+    trap 'clear; exit 0' INT TERM
     main_menu
 }
 
 # 启动脚本
 # 修改后的启动逻辑
-#if [[ -n "${BASH_SOURCE}" && "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    #main "$@"
-#fi
-main
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
+#main
