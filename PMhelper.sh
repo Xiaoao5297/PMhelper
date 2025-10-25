@@ -515,8 +515,8 @@ init() {
 # ================================
 
 main() {
-    init
-    trap 'clear; exit 0' INT TERM
+    #init
+    #trap 'clear; exit 0' INT TERM
     main_menu
 }
 
