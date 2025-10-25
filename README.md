@@ -3,17 +3,17 @@
 ### 中文 Chinese
 <a id="chs"></a>
 ## PMhelper
-`PMhelper`是一个便于在手机上安装和运行PocketMine的项目。
+`PMhelper`是一个旨在简化在移动设备上安装和运行 PocketMine 的项目。
 
 ### 启动和安装
-- 确保您的设备是aarch64地CPU架构，否则请使用自己的php二进制文件
+- 确保您的设备使用 aarch64 CPU 架构。如果不是，请使用您自己的 PHP 二进制文件。
 - 在[Termux](https://github.com/termux/termux-app)软件里运行以下命令
 ```bash
 bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/PMhelper/refs/heads/main/PMhelper.sh)"
 ```
-- 随后弹出一个dialog窗口，使用上下方向键可以选择，输入回车键以选择。
-- 安装完成后，PocketMine地安装位置一般在`/data/data/com.termux/files/home/PocketMine/`或`$HOME/PocketMine/`文件夹下
-- 您可以在此文件夹的`bin/`文件夹里使用您自己的php二进制包
+- 随后弹出一个 dialog 窗口，使用上下方向键可以选择，输入回车键以选择。
+- 安装后，PocketMine 通常会被安装在以下目录：`/data/data/com.termux/files/home/PocketMine/`或`$HOME/PocketMine/`
+- 您可以在此文件夹的`bin/`文件夹里使用您自己的 php 二进制包
 
 ### English
 <a id="eng"></a>
@@ -24,7 +24,7 @@ bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/PMhelper/refs/he
 ### Installation and Startup
 
 - Ensure your device uses an aarch64 CPU architecture. If not, please use your own PHP binary.
-- Run the following command in the [Termux] (https://github.com/termux/termux-app) application:
+- Run the following command in the [Termux](https://github.com/termux/termux-app) application:
 ```bash
 bash -c "$(curl -L https://raw.githubusercontent.com/Xiaoao5297/PMhelper/refs/heads/main/PMhelper.sh)"
 ```
