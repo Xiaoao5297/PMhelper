@@ -111,6 +111,7 @@ declare -A VERSION_DATABASE=(
     # 1.2.x 系列 - 新增示例
     ["12001"]="PocketMine-MP 1.2.12|${GITHUB}/bins/php|${GITHUB}/srcs/1.2.12/PocketMine-MP1.2.12.phar|7.2|1.2.x"
     ["12101"]="PocketMine-MP|${GITHUB}/bins/php8/php82|${PMMP_GITHUB}/5.36.0/PocketMine-MP.phar|8.2|1.21.111"
+    ["12113"]="PocketMine-MP|${GITHUB}/bins/php8/php82|https://github.com/pmmp/PocketMine-MP/releases/download/5.39.2/PocketMine-MP.phar|8.2|1.21.130"
 )
 
 # 版本分类显示配置
